@@ -5,7 +5,6 @@ Full-stack application with a modern React dashboard and Claude Desktop MCP serv
 ## 🌐 Live Demo
 
 - **Frontend Dashboard:** [https://google-sheets-mcp-two.vercel.app](https://google-sheets-mcp-two.vercel.app)
-- **Backend API:** [https://googlesheetsmcp.onrender.com](https://googlesheetsmcp.onrender.com)
 
 ## 🚀 Quick Start
 
