@@ -1,0 +1,7 @@
+# Google Sheets MCP Server
+
+node_modules/
+.env
+service-account.json
+*.log
+.DS_Store
