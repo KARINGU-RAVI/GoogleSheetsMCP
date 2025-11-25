@@ -3,6 +3,37 @@ const cors = require('cors');
 const { google } = require('googleapis');
 require('dotenv').config();
 
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+const PORT = process.env.PORT || 5000;
+const SERVICE_ACCOUNT_KEY_PATH = process.env.SERVICE_ACCOUNT_KEY_PATH || './service-account.json';
+const GOOGLE_CREDENTIALS = process.env.GOOGLE_CREDENTIALS;
+
+let sheets;
+try {
+    let auth;
+    if (GOOGLE_CREDENTIALS) {
+        const credentials = JSON.parse(GOOGLE_CREDENTIALS);
+        auth = new google.auth.GoogleAuth({
+            credentials,
+            scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+        });
+    } else {
+        auth = new google.auth.GoogleAuth({
+            keyFile: SERVICE_ACCOUNT_KEY_PATH,
+            scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+        });
+    }
+    sheets = google.sheets({ version: 'v4', auth });
+    console.log('✅ Google Sheets API initialized');
+} catch (error) {
+    console.error('❌ API Init Failed:', error.message);
+    process.exit(1);
+}
+
+app.get('/api/health', (req, res) => res.json({ status: 'ok', time: new Date() }));
 
 app.get('/api/spreadsheet/:spreadsheetId/metadata', async (req, res) => {
     try {
